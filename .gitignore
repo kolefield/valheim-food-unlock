@@ -1,0 +1,8 @@
+bin/
+obj/
+tools/
+dist/
+*.user
+*.pdb
+.env
+.env.*
