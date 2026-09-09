@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace FoodUnlock
 {
-    [BepInPlugin(Id, "Food Unlock", "0.3.1")]
+    [BepInPlugin(Id, "Food Unlock", "0.3.2")]
     [BepInDependency("com.jotunn.jotunn")]
     public sealed partial class Plugin : BaseUnityPlugin
     {
@@ -38,7 +38,7 @@ namespace FoodUnlock
                     "Eat the food assigned in the book. Works outside menus, without Alt/Ctrl/Shift.");
             harmony = new Harmony(Id);
             harmony.PatchAll(typeof(Plugin).Assembly);
-            Logger.LogInfo("Food Unlock 0.3.1 loaded. Food book shortcut: " + toggle.Value);
+            Logger.LogInfo("Food Unlock 0.3.2 loaded. Food book shortcut: " + toggle.Value);
         }
 
         private static bool IsFood(ItemDrop.ItemData item)

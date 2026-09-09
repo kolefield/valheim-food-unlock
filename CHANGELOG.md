@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.2
+
+- Rebuilt against Valheim 1.0.7 to use its updated Character.Message API, fixing the per-frame MissingMethodException that prevented F7 and food hotkeys from running.
+- Preserves existing food unlocks, slot assignments, and controls.
+
 ## 0.3.1
 
 - First public release; increased mouse-wheel scrolling speed.

@@ -1,6 +1,6 @@
 {
   "name": "Food_Unlock",
-  "version_number": "0.3.1",
+  "version_number": "0.3.2",
   "website_url": "https://github.com/kolefield/valheim-food-unlock",
   "description": "Eat a food once to unlock unlimited servings. Includes a Valheim-style food book, icons, tooltips, health/stamina sorting, and three assignable hotkeys. Normal food timers and stomach limits still apply.",
   "dependencies": [
