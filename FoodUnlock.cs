@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace FoodUnlock
 {
-    [BepInPlugin(Id, "Food Unlock", "0.3.2")]
+    [BepInPlugin(Id, "Food Unlock", "0.3.3")]
     [BepInDependency("com.jotunn.jotunn")]
     public sealed partial class Plugin : BaseUnityPlugin
     {
@@ -21,6 +21,7 @@ namespace FoodUnlock
         private Harmony harmony;
         private static readonly System.Reflection.MethodInfo TakeInput = AccessTools.Method(typeof(Player), "TakeInput");
         private ConfigEntry<KeyboardShortcut> toggle;
+        private ConfigEntry<bool> permanentAssignedFood;
         private readonly ConfigEntry<KeyCode>[] slotKeys = new ConfigEntry<KeyCode>[3];
         private Player bookPlayer;
         private bool visible;
@@ -32,13 +33,18 @@ namespace FoodUnlock
             instance = this;
             toggle = Config.Bind("Controls", "Food book", new KeyboardShortcut(KeyCode.F7),
                 "Open or close the food book. Eat a real food once to unlock it.");
+            permanentAssignedFood = Config.Bind("Food", "Permanent assigned food", false,
+                "Automatically apply assigned foods at full health/stamina/eitr bonuses, without timer decay. " +
+                "Restores them after death. Clearing or replacing a slot immediately removes its old effect " +
+                "unless another slot still assigns that food. Assigned foods take priority within the three-food limit. " +
+                "Disabling returns active food to normal timers; this does not refill current health/stamina/eitr.");
             var defaults = new[] { KeyCode.Z, KeyCode.V, KeyCode.B };
             for (var i = 0; i < slotKeys.Length; i++)
                 slotKeys[i] = Config.Bind("Controls", "Food slot " + (i + 1), defaults[i],
                     "Eat the food assigned in the book. Works outside menus, without Alt/Ctrl/Shift.");
             harmony = new Harmony(Id);
             harmony.PatchAll(typeof(Plugin).Assembly);
-            Logger.LogInfo("Food Unlock 0.3.2 loaded. Food book shortcut: " + toggle.Value);
+            Logger.LogInfo("Food Unlock 0.3.3 loaded. Food book shortcut: " + toggle.Value);
         }
 
         private static bool IsFood(ItemDrop.ItemData item)
@@ -78,6 +84,7 @@ namespace FoodUnlock
         private void Update()
         {
             var player = Player.m_localPlayer;
+            UpdatePermanentMode(player);
             if (visible && (player == null || player != bookPlayer || player.IsDead())) Close();
             if (visible)
             {
@@ -149,6 +156,13 @@ namespace FoodUnlock
 
         private void Eat(Player player, ItemDrop.ItemData food)
         {
+            if (permanentAssignedFood.Value && DesiredPermanentFoods(player)
+                .Any(selection => selection.Item.m_shared.m_name == food.m_shared.m_name))
+            {
+                RefreshPermanentFood(player);
+                status = DisplayName(food) + " is already applied permanently while assigned.";
+                return;
+            }
             // Detached serving: inventory and container contents are never changed.
             var serving = food.Clone();
             serving.m_dropPrefab = food.m_dropPrefab;

@@ -108,6 +108,7 @@ namespace FoodUnlock
                     ButtonAt(card.transform, "Clear", 66, 68, 100, 28, () =>
                     {
                         bookPlayer.m_customData.Remove(SlotKey + slot);
+                        RefreshPermanentFood(bookPlayer);
                         RefreshAssignments();
                     });
                 }
@@ -188,6 +189,7 @@ namespace FoodUnlock
                     var button = ButtonAt(row.transform, "", 92 + i * 164, 68, 152, 30, () =>
                     {
                         bookPlayer.m_customData[SlotKey + slot] = food.m_dropPrefab.name;
+                        RefreshPermanentFood(bookPlayer);
                         status = DisplayName(food) + " assigned to " + slotKeys[slot].Value + ".";
                         RefreshAssignments();
                     });
@@ -235,7 +237,10 @@ namespace FoodUnlock
             nextBookUpdate = Time.unscaledTime + 0.2f;
             UpdateBookScale();
             for (var i = 0; i < eatButtons.Count; i++) eatButtons[i].interactable = bookPlayer.CanEat(foods[i], false);
-            statusText.text = string.IsNullOrEmpty(status) ? "Assign three foods above, then use their keys during play." : status;
+            statusText.text = string.IsNullOrEmpty(status)
+                ? (permanentAssignedFood.Value
+                    ? "Assigned foods stay at full strength through death. Clear a slot to remove its effect."
+                    : "Assign three foods above, then use their keys during play.") : status;
         }
 
         private void DestroyBook()

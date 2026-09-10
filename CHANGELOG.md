@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.3
+
+- Added off-by-default `Food / Permanent assigned food`: assigned foods automatically apply at maximum health, stamina, and eitr bonuses without decay, and restore after death/rejoin.
+- Clearing or replacing a slot immediately releases the old effect. Duplicate assignments share one effect. Assigned food takes priority within the three-food stomach limit.
+- Disabling the mode resumes ordinary food decay. Existing unlocks and assignments are preserved.
+- Added executable food-state regression checks using the installed game's food record types.
+
 ## 0.3.2
 
 - Rebuilt against Valheim 1.0.7 to use its updated Character.Message API, fixing the per-frame MissingMethodException that prevented F7 and food hotkeys from running.

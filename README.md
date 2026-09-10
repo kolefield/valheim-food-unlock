@@ -4,7 +4,8 @@
 
 A Valheim-style food book with icons, native hover tooltips, health/stamina sorting,
 and three assignable hotkeys. Skip repeat food farming while keeping normal food
-bonuses, timers, and stomach limits.
+bonuses, timers, and stomach limits by default. An optional permanent-food mode
+keeps assigned foods at full strength through death.
 
 ## How to use
 
@@ -54,17 +55,45 @@ Use distinct bindings. Alt+Z/V/B remain available for other mods.
 An assigned food key suppresses simultaneous auto-run while held; clearing that
 assignment restores normal behavior.
 
+### Permanent assigned food (optional)
+
+In `BepInEx/config/local.foodunlock.cfg`, set:
+
+```ini
+[Food]
+Permanent assigned food = true
+```
+
+This setting is **off by default**. With it enabled, assigning an unlocked food to
+Z, V, or B automatically applies its full health, stamina, and eitr bonuses. Its
+timer and bonuses stay at maximum, and assigned foods return automatically after
+death and on rejoining. You do not need to press the food hotkeys.
+
+Clearing a slot immediately removes its food effect. Replacing an assignment
+immediately removes the old effect and applies the new food. Duplicate assignments
+share one effect; it remains until the last slot assigning that food is cleared.
+Choose three different foods for three effects.
+
+The three-food stomach limit remains. If space is needed, assigned food replaces
+the most depleted ordinary, unassigned food. Other ordinary foods retain normal
+timers and behavior. Missing or no-longer-unlocked foods cannot be applied.
+
+This holds the food's **bonuses** at maximum; it does not refill your current
+health, stamina, or eitr continuously. Disabling the setting lets active food
+resume normal decay. Edit the file while the game is closed, or change the setting
+live through BepInEx Configuration Manager.
+
 ## Unlock rules
 
 - Unlocks happen on **successful eating**, not crafting or discovering a recipe.
 - Foods eaten before installing the mod must be eaten again to unlock.
 - Normal raw edible foods, including berries, count.
 - Meads, potions, and foods with consumption status effects are excluded.
-- Food effects still expire normally. This mod does not automatically eat for you.
+- Food effects expire normally unless permanent assigned food is enabled.
 - Unlocks and assignments are stored per character in normal character saves.
   Log out normally to save your progress.
 
-Recipes, inventory layouts, storage, and food balance are unchanged.
+Recipes, inventory layouts, and storage are unchanged.
 
 ## Compatibility
 
