@@ -3,7 +3,7 @@
 Requires the .NET 8 SDK, an installed copy of Valheim, and a BepInEx profile with
 Jotunn. Game and dependency assemblies are referenced locally and never bundled.
 
-For 0.3.3, build against Valheim 1.0.7 assemblies. Rebuilding binds the optional
+Version 0.3.4 was built against Valheim 1.0.12 and Jotunn 2.30.0. Rebuilding binds the optional
 arguments in `Character.Message` calls to the updated game API; an older game
 installation will produce an incompatible DLL even from this source version.
 
@@ -15,10 +15,17 @@ GameDir must contain `valheim_Data/Managed`. ProfileDir must contain `BepInEx/co
 and `BepInEx/plugins/ValheimModding-Jotunn/Jotunn.dll`, as installed by r2modman.
 Adjust the Jotunn reference if your manual installation differs.
 
+The current local profile is Gale's `Default`. To use it explicitly:
+
+```powershell
+dotnet build -c Release "-p:ProfileDir=$env:APPDATA\com.kesomannen.gale\valheim\profiles\Default"
+./scripts/check-api.ps1 -ProfileDir "$env:APPDATA\com.kesomannen.gale\valheim\profiles\Default"
+```
+
 Output: `bin/Release/netstandard2.1/FoodUnlock.dll`.
 
 Run `./scripts/package.ps1` to package the existing Release DLL. Build first after
-code changes. The script verifies versions and creates `dist/Food_Unlock-0.3.3.zip`
+code changes. The script verifies versions and creates `dist/Food_Unlock-0.3.4.zip`
 with only the DLL, manifest, icon, README, changelog, and MIT license.
 
 Regenerate the original icon on Windows with `./scripts/create-icon.ps1`.

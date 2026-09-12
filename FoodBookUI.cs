@@ -113,7 +113,7 @@ namespace FoodUnlock
                     });
                 }
                 Label(root, "Sort by", 28, 224, 84, 32);
-                var names = new[] { "Name", "Health", "Stamina" };
+                var names = new[] { "Name", "Health", "Stamina", "Eitr" };
                 for (var i = 0; i < names.Length; i++)
                 {
                     var mode = i;
@@ -157,7 +157,8 @@ namespace FoodUnlock
             foods.Sort((a, b) =>
             {
                 var compare = sortMode == 1 ? b.m_shared.m_food.CompareTo(a.m_shared.m_food)
-                    : sortMode == 2 ? b.m_shared.m_foodStamina.CompareTo(a.m_shared.m_foodStamina) : 0;
+                    : sortMode == 2 ? b.m_shared.m_foodStamina.CompareTo(a.m_shared.m_foodStamina)
+                    : sortMode == 3 ? b.m_shared.m_foodEitr.CompareTo(a.m_shared.m_foodEitr) : 0;
                 return compare != 0 ? compare : string.Compare(DisplayName(a), DisplayName(b), StringComparison.CurrentCulture);
             });
         }
@@ -167,11 +168,13 @@ namespace FoodUnlock
             foreach (Transform child in listContent) { child.gameObject.SetActive(false); Destroy(child.gameObject); }
             eatButtons.Clear();
             assignmentLabels.Clear();
-            Place(listContent, 0, 0, 744, Mathf.Max(366, foods.Count * 116));
+            const float rowHeight = 132;
+            const float rowSpacing = 140;
+            Place(listContent, 0, 0, 744, Mathf.Max(366, foods.Count * rowSpacing));
             for (var index = 0; index < foods.Count; index++)
             {
                 var food = foods[index];
-                var row = ImageAt(listContent, 4, index * 116 + 4, 736, 108,
+                var row = ImageAt(listContent, 4, index * rowSpacing + 4, 736, rowHeight,
                     new Color(0, 0, 0, index % 2 == 0 ? 0.23f : 0.10f));
                 var icon = ImageAt(row.transform, 12, 18, 64, 64, Color.white);
                 icon.sprite = food.GetIcon();
@@ -181,12 +184,14 @@ namespace FoodUnlock
                 var s = food.m_shared;
                 Label(row.transform, $"Health {s.m_food:0}   Stamina {s.m_foodStamina:0}   Eitr {s.m_foodEitr:0}",
                     92, 35, 510, 27, 18);
+                Label(row.transform, $"Health regen {s.m_foodRegen:0.##} HP / 10 sec (base)",
+                    92, 62, 510, 25, 18);
                 eatButtons.Add(ButtonAt(row.transform, "Eat", 616, 16, 102, 38, () => Eat(bookPlayer, food)));
                 var labels = new Text[3];
                 for (var i = 0; i < 3; i++)
                 {
                     var slot = i;
-                    var button = ButtonAt(row.transform, "", 92 + i * 164, 68, 152, 30, () =>
+                    var button = ButtonAt(row.transform, "", 92 + i * 164, 92, 152, 30, () =>
                     {
                         bookPlayer.m_customData[SlotKey + slot] = food.m_dropPrefab.name;
                         RefreshPermanentFood(bookPlayer);

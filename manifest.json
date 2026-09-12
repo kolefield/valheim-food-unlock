@@ -1,6 +1,6 @@
 {
   "name": "Food_Unlock",
-  "version_number": "0.3.3",
+  "version_number": "0.3.4",
   "website_url": "https://github.com/kolefield/valheim-food-unlock",
   "description": "Eat once to unlock unlimited servings, with a food book and three hotkeys. Optional permanent assigned food keeps full bonuses through death. Normal timers apply by default; the three-food limit remains.",
   "dependencies": [

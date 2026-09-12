@@ -2,7 +2,7 @@
 
 **Eat a food once. Unlock unlimited servings.**
 
-A Valheim-style food book with icons, native hover tooltips, health/stamina sorting,
+A Valheim-style food book with icons, native hover tooltips, health/stamina/eitr sorting,
 and three assignable hotkeys. Skip repeat food farming while keeping normal food
 bonuses, timers, and stomach limits by default. An optional permanent-food mode
 keeps assigned foods at full strength through death.
@@ -17,8 +17,10 @@ keeps assigned foods at full strength through death.
    the book and press the corresponding key to eat.
 
 The three assignments appear above the list. Use **Clear** to remove an assignment.
-Hover a food for its item tooltip. Sort by **Name**, **Health**, or **Stamina**;
-health and stamina sort highest first. Scroll with the mouse wheel or drag the list.
+Hover a food for its item tooltip. Sort by **Name**, **Health**, **Stamina**, or **Eitr**;
+numeric stats sort highest first, with alphabetical ordering for ties. Each food
+also shows its base health regeneration in HP per 10 seconds, before status-effect
+modifiers. Scroll with the mouse wheel or drag the list.
 Press F7, Escape, or Close to close the book.
 
 **The world keeps running while the book is open.**

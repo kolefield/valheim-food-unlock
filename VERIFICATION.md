@@ -1,4 +1,23 @@
-# Food Unlock 0.3.3 verification — 2026-09-10
+# Food Unlock verification
+
+## 0.3.4 — 2026-09-12
+
+- Added descending Eitr sorting with the existing localized alphabetical tiebreaker.
+- Added base health regeneration to each selection row, with two decimal places
+  where needed. The installed game's `Player.UpdateFood` confirms this value is
+  applied every 10 seconds before status-effect modifiers.
+- Increased rows to 132 pixels with 140-pixel spacing. Regeneration occupies
+  y=62–87, assignment buttons y=92–122. The fourth sort button ends at x=672
+  inside the existing 800-pixel panel. These are source layout checks, not screenshots.
+- Release build against Valheim 1.0.12 and Gale Default's Jotunn 2.30.0 passed;
+  existing transitive assembly-version warnings remain. Game API resolution and
+  string-based target checks passed. Evidence: `dist/build-0.3.4.log` and
+  `dist/api-check-0.3.4.log`.
+- Not installed or published. Valheim was running; the loaded 0.3.3 DLL was left
+  untouched. In-game visual/input verification remains pending: open F7, click
+  Eitr, confirm descending order and readable regen labels, and scroll/assign.
+
+## 0.3.3 verification — 2026-09-10
 
 ## Completed
 

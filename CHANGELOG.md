@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.4
+
+- Added Eitr sorting, highest first, with alphabetical ordering for ties.
+- Displayed each food's base health regeneration in HP per 10 seconds in the selection list.
+- Increased row height to keep regeneration text separate from assignment buttons.
+
 ## 0.3.3
 
 - Added off-by-default `Food / Permanent assigned food`: assigned foods automatically apply at maximum health, stamina, and eitr bonuses without decay, and restore after death/rejoin.
