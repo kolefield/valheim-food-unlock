@@ -9,11 +9,12 @@ using UnityEngine;
 
 namespace FoodUnlock
 {
-    [BepInPlugin(Id, "Food Unlock", "0.3.4")]
+    [BepInPlugin(Id, "Food Unlock", Version)]
     [BepInDependency("com.jotunn.jotunn")]
     public sealed partial class Plugin : BaseUnityPlugin
     {
         private const string Id = "local.foodunlock";
+        private const string Version = "0.3.5";
         // Versioned, namespaced character data leaves other mods' save fields alone.
         private const string SaveKey = Id + ".foods.v1";
         private const string SlotKey = Id + ".slot.v1.";
@@ -21,6 +22,7 @@ namespace FoodUnlock
         private Harmony harmony;
         private static readonly System.Reflection.MethodInfo TakeInput = AccessTools.Method(typeof(Player), "TakeInput");
         private ConfigEntry<KeyboardShortcut> toggle;
+        private ConfigEntry<float> foodBookScale;
         private ConfigEntry<bool> permanentAssignedFood;
         private readonly ConfigEntry<KeyCode>[] slotKeys = new ConfigEntry<KeyCode>[3];
         private Player bookPlayer;
@@ -33,6 +35,9 @@ namespace FoodUnlock
             instance = this;
             toggle = Config.Bind("Controls", "Food book", new KeyboardShortcut(KeyCode.F7),
                 "Open or close the food book. Eat a real food once to unlock it.");
+            foodBookScale = Config.Bind("UI", "Food book scale", FoodBookScale.DefaultMultiplier,
+                new ConfigDescription("Preferred food book size. The book scales down as needed to fit the screen.",
+                    new AcceptableValueRange<float>(FoodBookScale.DefaultMultiplier, FoodBookScale.MaximumMultiplier)));
             permanentAssignedFood = Config.Bind("Food", "Permanent assigned food", false,
                 "Automatically apply assigned foods at full health/stamina/eitr bonuses, without timer decay. " +
                 "Restores them after death. Clearing or replacing a slot immediately removes its old effect " +
@@ -44,7 +49,7 @@ namespace FoodUnlock
                     "Eat the food assigned in the book. Works outside menus, without Alt/Ctrl/Shift.");
             harmony = new Harmony(Id);
             harmony.PatchAll(typeof(Plugin).Assembly);
-            Logger.LogInfo("Food Unlock 0.3.4 loaded. Food book shortcut: " + toggle.Value);
+            Logger.LogInfo($"Food Unlock {Version} loaded. Food book shortcut: " + toggle.Value);
         }
 
         private static bool IsFood(ItemDrop.ItemData item)

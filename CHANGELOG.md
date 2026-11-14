@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.5
+
+- Added a food book scale setting from 1× to 2× for high-resolution displays. The
+  default is 1×, and the panel scales down to fit the available screen space.
+
 ## 0.3.4
 
 - Added Eitr sorting, highest first, with alphabetical ordering for ties.

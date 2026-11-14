@@ -90,7 +90,8 @@ namespace FoodUnlock
                     throw new InvalidOperationException("Valheim's inventory tooltip prefab is unavailable.");
                 tooltipPrefab = sourceTip.m_tooltipPrefab;
                 panel = GUIManager.Instance.CreateWoodpanel(GUIManager.CustomGUIFront.transform,
-                    new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, 800, 760, false);
+                    new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero,
+                    FoodBookScale.Width, FoodBookScale.Height, false);
                 var root = panel.GetComponent<RectTransform>();
                 root.pivot = new Vector2(0.5f, 0.5f);
                 panel.name = "FoodUnlockBook";
@@ -231,8 +232,9 @@ namespace FoodUnlock
             if (panel == null) return;
             var parent = panel.transform.parent as RectTransform;
             if (parent == null) return;
-            var scale = Mathf.Min(1, (parent.rect.width - 32) / 800, (parent.rect.height - 32) / 760);
-            panel.transform.localScale = Vector3.one * Mathf.Max(0.1f, scale);
+            var bounds = parent.rect;
+            var scale = FoodBookScale.Fit(foodBookScale.Value, bounds.width, bounds.height);
+            panel.transform.localScale = Vector3.one * scale;
         }
 
         private void UpdateBook()
