@@ -1,5 +1,18 @@
 # Food Unlock verification
 
+## 0.3.5
+
+- Release build passed with zero warnings or errors using the Valheim 1.0.21
+  Steam Linux dedicated-server managed assemblies, BepInExPack 5.4.2333, and
+  Jotunn 2.30.0.
+- All 14 isolated food book scaling checks and all 15 synthetic food-state
+  regression checks passed.
+- The API check resolved all 98 game/Unity member references and verified five
+  reflected Player method signatures, the five Harmony patch declarations, and
+  the permanent-food setting default.
+- In-game verification is pending. Follow the 1440p and 4K panel, tooltip,
+  button, scrolling, and save/reload checks in [BUILDING.md](BUILDING.md#verification).
+
 ## 0.3.4 — 2026-09-12
 
 - Added descending Eitr sorting with the existing localized alphabetical tiebreaker.

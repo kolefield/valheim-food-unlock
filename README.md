@@ -57,6 +57,22 @@ Use distinct bindings. Alt+Z/V/B remain available for other mods.
 An assigned food key suppresses simultaneous auto-run while held; clearing that
 assignment restores normal behavior.
 
+### Food book scale
+
+After launching the updated mod once, close the game and edit
+`BepInEx/config/local.foodunlock.cfg`:
+
+```ini
+[UI]
+Food book scale = 2
+```
+
+The default is `1`. Use any value from `1` to `2`, such as `1.5`. The panel
+uses the requested multiplier when it fits and scales down when the available
+canvas is smaller. The setting scales the book and its controls. Hover tooltips
+use Valheim's native sizing. You can also change the setting in-game through
+BepInEx Configuration Manager.
+
 ### Permanent assigned food (optional)
 
 In `BepInEx/config/local.foodunlock.cfg`, set:
